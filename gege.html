@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Weight We Carry</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f9fb;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #3e497a;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+    nav {
+      background: #2c3e50;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: bold;
+    }
+    nav a:hover { text-decoration: underline; }
+    section {
+      padding: 40px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 { text-align: center; color: #3e497a; }
+    p { font-size: 18px; line-height: 1.6; color: #333; }
+    form {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #3e497a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover { background: #2c3e50; }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #3e497a;
+      color: white;
+      margin-top: 30px;
+    }
+
+    /* Popup overlay */
+    #thankyou-message {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+    #thankyou-message .popup-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 400px;
+      animation: fadeIn 0.4s ease-in-out;
+      position: relative;
+    }
+    #thankyou-message img { max-width: 150px; margin-top: 10px; }
+    #thankyou-message .close-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: #3e497a;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px; height: 30px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    #thankyou-message .close-btn:hover { background: #2c3e50; }
+    @keyframes fadeIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>The Weight We Carry</h1>
+  </header>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#share">Share Your Story</a>
+  </nav>
+
+  <section id="home">
+    <h2>Welcome</h2>
+    <p>
+      Each of us carries invisible burdens — struggles, worries, and emotions that we keep locked away out of fear of judgment. 
+      <strong>The Weight We Carry</strong> is here to remind you that you don’t have to. 
+      This space is created as a safe corner where you can finally put those feelings into words and release them.
+    </p>
+  </section>
+
+  <section id="about">
+    <h2>About This Website</h2>
+    <p>
+      "The Weight We Carry" speaks about the silent battles we all face. Life can be overwhelming, and many of us hide our pain behind smiles. 
+      But healing starts with expression — with sharing our stories and realizing that we’re not alone in our struggles.
+    </p>
+    <p>
+      This website is a gentle reminder that opening up is not a sign of weakness — it’s an act of courage.
+      Here, you can share your thoughts, feelings, and experiences without fear. Together, we can lighten the weight we carry.
+    </p>
+  </section>
+
+  <section id="share">
+    <h2>Share Your Story</h2>
+    <p>Use the form below to express what’s on your heart. No names are required — just your honest words. Remember: you are not alone.</p>
+
+    <!-- Form -->
+    <form id="storyForm">
+      <label for="name">Name (optional):</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name...">
+
+      <label for="story">Your Story:</label>
+      <textarea id="story" name="story" rows="6" placeholder="Write your thoughts, feelings, or story here..."></textarea>
+
+      <center><button type="submit">Submit</button></center>
+    </form>
+
+    <!-- Thank You Popup -->
+    <div id="thankyou-message">
+      <div class="popup-content">
+        <button class="close-btn">&times;</button>
+        <h2>✅ Thank you for sharing your story!</h2>
+        <p>Your words matter. 💙</p>
+        <img src="van.jpg" alt="Thank you image">
+      </div>
+    </div>
+
+    <center>
+      <h3>📖 Stories Shared:</h3>
+      <p><a href="stories.html" target="_blank">View all shared stories here</a></p>
+    </center>
+  </section>
+
+  <footer>
+    &copy; 2025 The Weight We Carry | You're not alone.
+  </footer>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getFirestore, collection, addDoc } 
+      from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAq-o-H0Noqn2HcIanUyeDC7vjPep-VG9Q",
+      authDomain: "website-62fcc.firebaseapp.com",
+      projectId: "website-62fcc",
+      storageBucket: "website-62fcc.firebasestorage.app",
+      messagingSenderId: "644610818809",
+      appId: "1:644610818809:web:bd674cc3c6746eefa19828",
+      measurementId: "G-0RGSECJH7J"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("storyForm");
+    const thankyouDiv = document.getElementById("thankyou-message");
+    const closeBtn = document.querySelector("#thankyou-message .close-btn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value || "Anonymous";
+      const story = document.getElementById("story").value;
+
+      if (story.trim() === "") {
+        alert("Please write a story before submitting.");
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "stories"), {
+          name: name,
+          story: story,
+          date: new Date().toLocaleString()
+        });
+
+        thankyouDiv.style.display = "flex";
+        setTimeout(() => {
+          thankyouDiv.style.display = "none";
+        }, 3000);
+
+        form.reset();
+      } catch (err) {
+        console.error("Error adding document:", err);
+        alert("Something went wrong while saving your story.");
+      }
+    });
+
+    closeBtn.addEventListener("click", () => {
+      thankyouDiv.style.display = "none";
+    });
+  </script>
+</body>
+</html>
